@@ -987,6 +987,8 @@ class PageRender extends Visitor {
 	}
 
 	protected function drawFormReadWriteValuePasswordAttribute($attribute,$i) {
+           $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+           $myPass = substr(str_shuffle($alphabet),0,8);
 		if (DEBUGTMP) printf('<font size=-2>%s</font><br />',__METHOD__);
 
 		$server = $this->getServer();
@@ -1008,7 +1010,7 @@ class PageRender extends Visitor {
 		printf('<input type="%s" class="value" name="new_values[%s][%s]" id="%s" value="%s" %s%s %s %s/>',
 			($obfuscate_password ? 'password' : 'text'),
 			htmlspecialchars($attribute->getName()),$i,$id,
-			htmlspecialchars($val),
+			($obfuscate_password ? $myPass : htmlspecialchars($val)),
 			$attribute->needJS('focus') ? sprintf('onfocus="focus_%s(this);" ',$attribute->getName()) : '',
 			$attribute->needJS('blur') ? sprintf('onblur="blur_%s(this);" ',$attribute->getName()) : '',
 			($attribute->getSize() > 0) ? sprintf('size="%s"',$attribute->getSize()) : '',
@@ -1024,9 +1026,10 @@ class PageRender extends Visitor {
 		echo '</td></tr><tr><td valign="top">';
 
 		if ($attribute->getVerify() && $obfuscate_password) {
-			printf('<input type="password" class="value" name="new_values_verify[%s][%s]" id="new_values_verify_%s_%s" value="" %s %s/>',
+			printf('<input type="password" class="value" name="new_values_verify[%s][%s]" id="new_values_verify_%s_%s" value="%s" %s %s/>',
 				htmlspecialchars($attribute->getName()),$i,
 				htmlspecialchars($attribute->getName()),$i,
+				$myPass,
 				($attribute->getSize() > 0) ? sprintf('size="%s"',$attribute->getSize()) : '',
 				($attribute->getMaxLength() > 0) ? sprintf('maxlength="%s"',$attribute->getMaxLength()) : '');
 

@@ -18,7 +18,7 @@ class ldap_pla extends ldap {
 
 		$this->default->appearance['pla_password_hash'] = array(
 			'desc'=>'Default HASH to use for passwords',
-			'default'=>'md5');
+			'default'=>'ssha');
 
 		$this->default->appearance['show_create'] = array(
 			'desc'=>'Whether to show the "Create new Entry here" in the tree browser',

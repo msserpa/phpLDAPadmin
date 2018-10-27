@@ -91,7 +91,7 @@ if (count($request['template']->getLDAPadd(true))) {
 		printf('<td><b>%s</b></td>',$attribute->getFriendlyName());
 
 		# Show NEW Values
-		echo '<td><span style="white-space: nowrap;">';
+		echo '<td><span style="display: block;width:150px;word-wrap:break-word;">';
 		$request['page']->draw('CurrentValues',$attribute);
 		echo '</span></td>';
 

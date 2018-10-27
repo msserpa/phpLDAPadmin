@@ -14,6 +14,7 @@
 <objectClasses>
 <objectClass id="inetOrgPerson"></objectClass>
 <objectClass id="posixAccount"></objectClass>
+<objectClass id="ldapPublicKey"></objectClass>
 </objectClasses>
 
 <attributes>
@@ -38,6 +39,12 @@
 	<order>3</order>
 	<page>1</page>
 </attribute>
+<attribute id="mail">
+        <display>E-mail</display>
+        <order>4</order>
+	<page>1</page>
+	<value></value>
+</attribute>
 <attribute id="uid">
 	<display>User ID</display>
 	<onchange>=autoFill(homeDirectory;/home/users/%uid%)</onchange>
@@ -53,7 +60,6 @@
 </attribute>
 <attribute id="uidNumber">
 	<display>UID Number</display>
-	<icon>terminal.png</icon>
 	<order>6</order>
 	<page>1</page>
 	<readonly>1</readonly>
@@ -64,21 +70,18 @@
 	<!-- <onchange>=autoFill(homeDirectory;/home/users/%gidNumber|0-0/T%/%uid|3-%)</onchange> -->
 	<order>7</order>
 	<page>1</page>
-	<value><![CDATA[=php.PickList(/;(&(objectClass=posixGroup));gidNumber;%cn%;;;;cn)]]></value>
+	<value>501</value>
 </attribute>
 <attribute id="loginShell">
-	<display>Login shell</display>
-	<order>9</order>
-	<page>1</page>
-	<!-- <value><![CDATA[=php.PickList(/;(&(objectClass=posixAccount));loginShell;%loginShell%;;;;loginShell)]]></value> -->
-	<type>select</type>
-	<value id="/bin/bash">Bash</value>
-	<value id="/bin/csh">C Shell</value>
-	<value id="/bin/dash">Dash</value>
-	<value id="/bin/sh">Shell</value>
-	<value id="/bin/tsh">Turbo C Shell</value>
-	<value id="/bin/false">False</value>
-	<value id="/usr/sbin/nologin">No Login</value>
+        <display>Login shell</display>
+        <order>9</order>
+        <page>1</page>
+        <value id="/bin/bash">/bin/bash</value>
+</attribute>
+<attribute id="sshPublicKey">
+        <display>sshPublicKey</display>
+        <order>9</order>
+        <page>1</page>
 </attribute>
 <attribute id="userPassword">
 	<display>Password</display>
@@ -87,7 +90,6 @@
 		<id>enc</id>
 		<value>=php.PasswordEncryptionTypes()</value>
 	</helper> -->
-	<icon>lock.png</icon>
 	<order>5</order>
 	<page>1</page>
 	<post>=php.PasswordEncrypt(%enc%;%userPassword%)</post>
